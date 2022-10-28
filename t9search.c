@@ -6,6 +6,7 @@ char preklad (char jmeno) // funkce na prelozeni znaku na cisla
 	{
 		jmeno += 32; 
 	}
+
 	if (jmeno == 'a'||jmeno == 'b'||jmeno == 'c'){
 		jmeno = '2';}
 	if (jmeno =='d'||jmeno == 'e'||jmeno == 'f'){
@@ -22,24 +23,23 @@ char preklad (char jmeno) // funkce na prelozeni znaku na cisla
 		jmeno = '8';}
 	if (jmeno == 'x'||jmeno == 'y'||jmeno == 'z'||jmeno == 'w'){
 		jmeno = '9';}
+
 	return jmeno;
 }
 
-// void vypis_shodnych_kontaktu (int pocitadlo, char kontakt_na_tisk []) // vypisuje shodne kontakty
-// {
-// 	for (int w = 0; w <= pocitadlo; w++)
-// 	{
-// 		printf ("%c", kontakt_na_tisk [w]);
-// 	}
-// 	printf ("\n");	
-// }
+void vypis_shodnych_kontaktu (int pocitadlo, char kontakt_na_tisk []) // funkce vypisuje shodne kontakty
+{
+	for (int w = 0; w <= pocitadlo; w++)
+	{
+		printf ("%c", kontakt_na_tisk [w]);
+	}
+	printf ("\n");	
+}
 
 int main (int argc, char *argv[])
 {
 	char znak = 'a';
-	// printf ("%d", argc); //pocet argumentu - jsou 2 pokud zadam cislo
-
-	// kontrola zadaneho cisla
+	// kontrola argumentu (zadaneho cisla) 
 	if (argc < 2) 
     {
 		while (znak != EOF) // vytiskne seznam pokud uzivatel nezada zadne cislo
@@ -61,12 +61,12 @@ int main (int argc, char *argv[])
 
 	else
 	{
-		int i = 0; // pocatecni hodnota pro posun v poli
+		int i = 0; // pocatecni hodnota pro posun v poli + pocet zadanych znaku
 		char vstupni_znak = 'a'; 
 		char char_vstup [100]; // zapise vstup
 		int pocitadlo = 0; // posova prvky v poli
 		int j = 0; // posouva vstupni argumenty k porovnani
-		char kontakt_na_tisk [100]; // pole znaku ktere kdyz je shoda tak vytiskne
+		char kontakt_na_tisk [100]; // pole znaku, ktere kdyz je shoda tak vytiskne
 		int splneno = 0; // kontrola shody
 		int konec_radku = 0; // pocitadlo na konce radku
 		int pocet_shod = 0; // kontrola na shody v porovnani vsech znaku
@@ -80,7 +80,6 @@ int main (int argc, char *argv[])
 			}
 			if (i == 100) // kontroluje pocet zadanych znaku
 			{
-				printf ("\n");
 				printf ("Prekrocena hranice cisel - max 100\n");
 				return 1;
 			}
@@ -111,15 +110,9 @@ int main (int argc, char *argv[])
 			if (j == i) // porovnavac shody
 			{
 				splneno++;
-				j = 0;
 			}
 
-			if (znak == ' '	|| znak == '\n')
-			{
-				j = 0;
-			}		
-
-			if (znak == '\n') // reset po nacteni jmena a cisla
+			if (znak == '\n') // reset po nacteni kontaktu (jmeno + cislo)
 			{
 				konec_radku++;
 				if (konec_radku == 2)
@@ -133,43 +126,26 @@ int main (int argc, char *argv[])
 			{
 				pocet_shod++;
 
-				while (konec_radku != 2)
+				while (1)
 				{
 					znak = getchar ();
 					if (znak == EOF) // pripad posledniho kontaktu
 					{
-						// znak = '\n';
-						// pocitadlo++;	
-						// kontakt_na_tisk [pocitadlo] = znak; 
-						// printf ("%s\n", kontakt_na_tisk);
-						for (int w = 0; w <= pocitadlo; w++)
-						{
-							printf ("%c", kontakt_na_tisk [w]);
-						}
-						printf ("\n");
-						return 1;	
+						vypis_shodnych_kontaktu (pocitadlo, kontakt_na_tisk);
+						return 0;	
 					}
 					if (znak == '\n')
 					{
 						konec_radku++;
-						if (konec_radku == 2)
-						{
+						if (konec_radku == 2){
 							break;
-						}
+							}
 					}
 					pocitadlo++;	
 					kontakt_na_tisk [pocitadlo] = znak; 
 				}
 
-				// printf ("%s\n", kontakt_na_tisk);	
-
-				for (int w = 0; w <= pocitadlo; w++)
-				{
-					printf ("%c", kontakt_na_tisk [w]);
-				}
-				printf ("\n");
-				
-
+				vypis_shodnych_kontaktu (pocitadlo, kontakt_na_tisk);
 				// reset
 				pocitadlo = -1;
 				konec_radku = 0;
