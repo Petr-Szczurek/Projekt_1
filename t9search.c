@@ -23,6 +23,8 @@ char preklad (char jmeno) // funkce na prelozeni znaku na cisla
 		jmeno = '8';}
 	if (jmeno == 'x'||jmeno == 'y'||jmeno == 'z'||jmeno == 'w'){
 		jmeno = '9';}
+	if (jmeno == '+'){
+		jmeno = '0';}	
 
 	return jmeno;
 }
@@ -111,13 +113,18 @@ int main (int argc, char *argv[])
 			{
 				j++;
 			}
-			else
+						// verze na hledani posobe jdoucich znaku
+			// else
+			// {
+			// 	j = 0;
+			// 	if (znak == char_vstup[j])
+			// 	{
+			// 		j++;
+			// 	}
+			// }
+			if (znak == ' ')
 			{
 				j = 0;
-				if (znak == char_vstup[j])
-				{
-					j++;
-				}
 			}
 
 			if (j == i) // porovnavac shody
@@ -128,6 +135,7 @@ int main (int argc, char *argv[])
 			if (znak == '\n') // reset po nacteni kontaktu (jmeno + cislo)
 			{
 				konec_radku++;
+				j = 0;
 				if (konec_radku == 2)
 				{
 					pocitadlo = -1;
@@ -139,13 +147,15 @@ int main (int argc, char *argv[])
 					pocitadlo++;
 					kontakt_na_tisk [pocitadlo] = ' ';
 				}
-				
 			}
+			
+			
 
 			if (splneno == 1)
 			{
 				pocet_shod++;
 				splneno = 0;
+				j = 0;
 
 				while (1) // dopise do pole ostatni znaky nehlede na dalsi shody
 				{
