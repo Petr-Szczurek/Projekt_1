@@ -39,7 +39,8 @@ void vypis_shodnych_kontaktu (int pocitadlo, char kontakt_na_tisk []) // funkce 
 int main (int argc, char *argv[])
 {
 	char znak = 'a';
-	// kontrola argumentu (zadaneho cisla) 
+	int konec_radku = 0; // pocitadlo koncu radku
+
 	if (argc < 2) 
     {
 		while (znak != EOF) // vytiskne seznam pokud uzivatel nezada zadne cislo
@@ -48,6 +49,19 @@ int main (int argc, char *argv[])
 			if (znak == EOF)
 			{
 				break;
+			}
+			if (znak == '\n')
+			{
+				konec_radku++;
+				if (konec_radku == 1)
+				{
+					printf (",");
+					znak = ' ';
+				}
+				if (konec_radku == 2)
+				{
+					konec_radku = 0;
+				}
 			}
 			printf ("%c", znak);
 		}
@@ -68,7 +82,6 @@ int main (int argc, char *argv[])
 		int j = 0; // posouva vstupni argumenty k porovnani
 		char kontakt_na_tisk [100]; // pole znaku (jmeno + cislo kontaktu), ktere kdyz je shoda tak vytiskne
 		int splneno = 0; // kontrola shody
-		int konec_radku = 0; // pocitadlo na konce radku
 		int pocet_shod = 0; // kontrola na shody v porovnani vsech znaku
 
 		while (vstupni_znak != '\0') // zapis vstupu od uzivatele do pole (max 100 znaku)
@@ -120,6 +133,13 @@ int main (int argc, char *argv[])
 					pocitadlo = -1;
 					konec_radku = 0;
 				}
+				if (konec_radku == 1)
+				{
+					kontakt_na_tisk [pocitadlo] = ',';
+					pocitadlo++;
+					kontakt_na_tisk [pocitadlo] = ' ';
+				}
+				
 			}
 
 			if (splneno == 1)
@@ -146,6 +166,12 @@ int main (int argc, char *argv[])
 							konec_radku = 0;
 							break;
 						}
+						if (konec_radku == 1)
+						{
+						pocitadlo++;
+						kontakt_na_tisk [pocitadlo] = ',';
+						znak = ' ';
+						}
 					}
 					pocitadlo++;
 					kontakt_na_tisk [pocitadlo] = znak;
@@ -153,7 +179,7 @@ int main (int argc, char *argv[])
 			}
 			pocitadlo++;
 		}
-		
+
 		if (pocet_shod == 0)
 		{
 			printf ("Nenalezeno\n");
